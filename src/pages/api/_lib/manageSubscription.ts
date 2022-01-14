@@ -1,23 +1,23 @@
 import { query as q } from 'faunadb';
-
-import { fauna } from '../../../services/fauna';
+import { fauna } from "../../../services/fauna";
 import { stripe } from '../../../services/stripe';
 
 export async function saveSubscription(
   subscriptionId: string,
   customerId: string,
-  createAction = false,
+  createAction = false 
 ) {
+  console.log(`subscriptionId: ${subscriptionId} :::customerId: ${customerId}`);
   const userRef = await fauna.query(
     q.Select(
-      'ref',
+      "ref",
       q.Get(
         q.Match(
           q.Index('user_by_stripe_customer_id'),
-          customerId,
-        ),
-      ),
-    ),
+          customerId
+        )
+      )
+    )
   );
 
   const subscription = await stripe.subscriptions.retrieve(subscriptionId);
@@ -27,51 +27,29 @@ export async function saveSubscription(
     userId: userRef,
     status: subscription.status,
     price_id: subscription.items.data[0].price.id,
-  };
+  }
 
-  if (createAction) {
-    try {
-      await fauna.query(
-        q.If(
-          q.Not(
-            q.Exists(
-              q.Match(
-                q.Index('subscription_by_id'),
-                q.Casefold(subscription.id),
-              ),
-            ),
-          ),
-          q.Create(
-            q.Collection('subscriptions'),
-            {
-              data: subscriptionData,
-            },
-          ),
-          q.Get(
-            q.Match(
-              q.Index('subscription_by_id'),
-              q.Casefold(subscription.id),
-            ),
-          ),
-        ),
-      );
-    } catch (err) {
-      throw new Error('Error save subscriptions.');
-    }
+  if(createAction){
+    await fauna.query(
+      q.Create(
+        q.Collection('subscriptions'),
+        { data: subscriptionData }
+      )
+    );
   } else {
     await fauna.query(
       q.Replace(
         q.Select(
-          'ref',
+          "ref",
           q.Get(
             q.Match(
               q.Index('subscription_by_id'),
-              subscriptionId,
-            ),
-          ),
+              subscriptionId
+            )
+          )
         ),
-        { data: subscriptionData },
-      ),
-    );
+        { data: subscriptionData }
+      )
+    )
   }
 }

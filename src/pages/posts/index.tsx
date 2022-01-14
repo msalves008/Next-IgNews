@@ -2,9 +2,21 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import { getPrismicClient } from "../../services/prismic";
 import styles from "./styles.module.scss";
-import Prismic from '@prismicio/client'
+import Prismic from "@prismicio/client";
+import { RichText } from "prismic-dom";
+import Link from "next/link";
 
-export default function Posts() {
+type Post = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  updatedAt: string;
+};
+interface PostsProps {
+  posts: Post[];
+}
+
+export default function Posts({ posts }: PostsProps) {
   return (
     <>
       <Head>
@@ -12,55 +24,51 @@ export default function Posts() {
       </Head>
       <main className={styles.container}>
         <div className={styles.posts}>
-          <a href='#'>
-            <time>09 de janeiro de 2022</time>
-            <strong>How to create Your Blog in 5 minutes!!!</strong>
-            <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-              animi sequi quaerat sunt, velit expedita eveniet placeat provident
-              modi, repudiandae consequuntur explicabo quo libero mollitia
-              sapiente eos culpa? Temporibus, in
-            </p>
-          </a>
-          <a href='#'>
-            <time>09 de janeiro de 2022</time>
-            <strong>How to create Your Blog in 5 minutes!!!</strong>
-            <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-              animi sequi quaerat sunt, velit expedita eveniet placeat provident
-              modi, repudiandae consequuntur explicabo quo libero mollitia
-              sapiente eos culpa? Temporibus, in
-            </p>
-          </a>
-          <a href='#'>
-            <time>09 de janeiro de 2022</time>
-            <strong>How to create Your Blog in 5 minutes!!!</strong>
-            <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-              animi sequi quaerat sunt, velit expedita eveniet placeat provident
-              modi, repudiandae consequuntur explicabo quo libero mollitia
-              sapiente eos culpa? Temporibus, in
-            </p>
-          </a>
+          {posts.map((post) => (
+            <Link key={post.slug} href={`/posts/${post.slug}`} >
+              <a key={post.slug}>
+                <time>{post.updatedAt}</time>
+                <strong>{post.title}</strong>
+                <p>{post.excerpt}</p>
+              </a>
+            </Link>
+          ))}
         </div>
       </main>
     </>
   );
 }
 
-export const getStaticProps: GetStaticProps = async () =>{
-  const prismic =  getPrismicClient()
+export const getStaticProps: GetStaticProps = async () => {
+  const prismic = getPrismicClient();
 
-  const response = await prismic.query(
-    [Prismic.Predicates.at('document.type', 'publication')],{
-      fetch:['publication.title', 'publication.content'],
+  const response = await prismic.query<any>(
+    [Prismic.Predicates.at("document.type", "publication")],
+    {
+      fetch: ["publication.title", "publication.content"],
       pageSize: 100,
     }
-  )
-  console.log(response)
-  return { 
+  );
+  const posts = response.results.map((post) => {
+    return {
+      slug: post.uid,
+      title: RichText.asText(post.data.title),
+      excerpt:
+        post.data.content.find((content) => content.type === "paragraph")
+          ?.text ?? "",
+      updatedAt: new Date(post.last_publication_date).toLocaleDateString(
+        "pt-BR",
+        {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        }
+      ),
+    };
+  });
+  return {
     props: {
-
-    }
-  }
-}
+      posts,
+    },
+  };
+};
