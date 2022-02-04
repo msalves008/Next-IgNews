@@ -1,60 +1,76 @@
 # IG News
-
-<!---Esses são exemplos. Veja https://shields.io para outras pessoas ou para personalizar este conjunto de escudos. Você pode querer incluir dependências, status do projeto e informações de licença aqui--->
-
 ![GitHub repo size](https://img.shields.io/github/repo-size/msalves008/ignite_rocketseat-reactjs-IgNews?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/msalves008/ignite_rocketseat-reactjs-IgNews?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/msalves008/ignite_rocketseat-reactjs-IgNews?style=for-the-badge)
 
 
-
 <img src="exemplo-image.png" alt="exemplo imagem">
 
-> Linha adicional de texto informativo sobre o que o projeto faz. Sua introdução deve ter cerca de 2 ou 3 linhas. Não exagere, as pessoas não vão ler.
+> Aplicação desenvolvida durante Bootcamp Ignite de ReactJs da Rocketseat, esta aplicação se consistem em um Blog para devs, onde os mesmo realizam acesso a plataforma para ter acesso aos Posts.
 
-### Ajustes e melhorias
+A plataforma conta com:
+* Login via GitHub;
+* Opção de Preview de posts para usuários sem inscrição ativa na plataforma ;
+* Prismic CMS
+* Pagamentos via Stripe;
+* Banco de dados NSQL - FaunaDB;
+* Entre outros;
 
-O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
+## 🚀 Tecnologias
 
-- [x] Tarefa 1
-- [x] Tarefa 2
-- [x] Tarefa 3
-- [ ] Tarefa 4
-- [ ] Tarefa 5
 
-## 💻 Pré-requisitos
+- [NextJS](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React Router DOM](https://reacttraining.com/react-router/)
+- [Prismic](https://prismic.io/)
+- [Stripe](https://stripe.com/)
+- [FaunaDB](https://fauna.com/)
+- [Github Authentication](https://docs.github.com/en/authentication)
 
-Antes de começar, verifique se você atendeu aos seguintes requisitos:
-<!---Estes são apenas requisitos de exemplo. Adicionar, duplicar ou remover conforme necessário--->
-* Você instalou a versão mais recente de `<linguagem / dependência / requeridos>`
-* Você tem uma máquina `<Windows / Linux / Mac>`. Indique qual sistema operacional é compatível / não compatível.
-* Você leu `<guia / link / documentação_relacionada_ao_projeto>`.
 
 ## ☕ Usando < IG News >
 
-Para usar < IG News >, siga estas etapas:
+Para usar IG News , siga estas etapas: </br></br>
+**Clone o projeto e acesse a pasta**
+
+```bash
+$ git clone https://github.com/msalves008/ignite_rocketseat-reactjs-IgNews && cd ignews
+```
+**Siga os passos a baixo**
+```bash
+# Instalando as dependências
+$ yarn install
+
+
+# Iniciando o projeto
+$ yarn start
 
 ```
-<exemplo_de_uso>
+
+```
+Environment variables
+
+GITHUB_ID= YOUR GITHUB_ID HERE
+GITHUB_SECRET= YOUR GITHUB_SECRET HERE
+
+FAUNADB_KEY= YOUR FAUNADB_KEY HERE
+
+NEXT_PUBLIC_STRIPE_PUBLIC_KEY= YOUR NEXT PUBLIC STRIPE PUBLIC KEY HERE
+STRIPE_SUCCESS_URL=  YOUR STRIPE SUCCESS URL HERE
+STRIPE_CANCEL_URL= YOUR STRIPE CANCEL URL HERE
+STRIPE_WEBHOOK_SECRET= YOUR STRIPE WEBHOOK SECRET HERE
+
+PRISMIC_API_URL= YOUR STRIPE WEBHOOK SECRET HERE
+PRISMIC_ACCESS_TOKEN= YOUR STRIPE WEBHOOK SECRET HERE
+
 ```
 
-Adicione comandos de execução e exemplos que você acha que os usuários acharão úteis. Fornece uma referência de opções para pontos de bônus!
 
-## 📫 Contribuindo para <IG News>
-<!---Se o seu README for longo ou se você tiver algum processo ou etapas específicas que deseja que os contribuidores sigam, considere a criação de um arquivo CONTRIBUTING.md separado--->
-Para contribuir com <IG News>, siga estas etapas:
 
-1. Bifurque este repositório.
-2. Crie um branch: `git checkout -b <nome_branch>`.
-3. Faça suas alterações e confirme-as: `git commit -m '<mensagem_commit>'`
-4. Envie para o branch original: `git push origin <IG News> / <local>`
-5. Crie a solicitação de pull.
 
-Como alternativa, consulte a documentação do GitHub em [como criar uma solicitação pull](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
-## 🤝 Colaboradores
+## 🤝 Criador
 
-Agradecemos às seguintes pessoas que contribuíram para este projeto:
 
 <table>
   <tr>
@@ -69,14 +85,3 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
    
   </tr>
 </table>
-
-
-## 😄 Seja um dos contribuidores<br>
-
-Quer fazer parte desse projeto? Clique [AQUI](CONTRIBUTING.md) e leia como contribuir.
-
-## 📝 Licença
-
-Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
-
-[⬆ Voltar ao topo](#nome-do-projeto)<br>
